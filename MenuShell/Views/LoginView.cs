@@ -1,5 +1,6 @@
 ﻿using MenuShell.Domain;
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace MenuShell.Views
     {
         public AuthenticationService AuthenticationService { get; }
 
-        public LoginView(string title, AuthenticationService authenticate) : base(title)
+        public LoginView(AuthenticationService authenticate) : base("Login View")
         {
             AuthenticationService = authenticate;
         }
@@ -42,6 +43,12 @@ namespace MenuShell.Views
                 if (key == ConsoleKey.Y)
                 {
                     user = AuthenticationService.Authenticate(username, password);
+                    if (user == null)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Invalid login! Try again.");
+                        Thread.Sleep(2000);
+                    }
                 }
 
             } while (user == null);

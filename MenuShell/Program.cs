@@ -17,7 +17,7 @@ namespace MenuShell
 
             var authenticate = new AuthenticationService(users);
 
-            var loginView = new LoginView("Login View", authenticate);
+            var loginView = new LoginView(authenticate);
 
             var validUser = loginView.Display();
 
@@ -25,7 +25,8 @@ namespace MenuShell
             {
                 case Role.Administrator:
                 {
-                    Console.WriteLine(validUser.ToString());
+                    var View = new AdministratorMainView();
+                    View.Display();
                     break;
                 }
                 case Role.Receptionist:

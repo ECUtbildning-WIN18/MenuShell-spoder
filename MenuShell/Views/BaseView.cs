@@ -16,6 +16,7 @@ namespace MenuShell.Views
             Title = title;
 
             Console.Title = title;
+            Console.Clear(); //eftersom jag skriver det här kommer den att rensa konsollen innan ny view visas.
         }
     }
 }
