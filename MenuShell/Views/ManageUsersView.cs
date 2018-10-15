@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MenuShell.Domain;
 
 namespace MenuShell.Views
 {
     class ManageUsersView: BaseView
     {
-        public ManageUsersView(): base("Manage Users")
+        private Dictionary<string, User> users;
+
+        public ManageUsersView(Dictionary<string, User> users) : base("Manage Users")
         {
-         
+            this.users = users;
         }
 
         public void Display()
@@ -27,8 +30,9 @@ namespace MenuShell.Views
             if (key == ConsoleKey.D1)
             {
                 //AddUserView
-                Console.WriteLine("Im going to add a user view here");
-                Console.ReadKey();
+                var view = new AddUsersView();
+                var user = view.Display();  
+                users.Add(user.UserName, user);
             }
             else
             {

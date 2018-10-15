@@ -4,6 +4,7 @@
     {
         Administrator,
         Receptionist,
-        Veterinarian
+        Veterinarian,
+        Undefined
     }
 }
