@@ -26,6 +26,7 @@ namespace MenuShell.Views
             do
             {
                 Console.Clear();
+                Console.WriteLine("# Login user\n");
                 Console.WriteLine("Username: ");
                 string username = Console.ReadLine();
 

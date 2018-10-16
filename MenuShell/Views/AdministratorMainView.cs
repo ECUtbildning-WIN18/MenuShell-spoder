@@ -10,9 +10,11 @@ namespace MenuShell.Views
 {
     class AdministratorMainView : BaseView
     {
-        public AdministratorMainView() : base("Administrator Main View")
+        private Dictionary<string, User> users;
+
+        public AdministratorMainView(Dictionary<string, User> users) : base("Administrator Main View")
         {
-            
+            this.users = users;
         }
 
         public bool Display()
@@ -23,7 +25,7 @@ namespace MenuShell.Views
 
             var key = ConsoleKey.NoName;
 
-            while (key != ConsoleKey.D1 && key != ConsoleKey.D2)
+            while (key != ConsoleKey.D1 && key != ConsoleKey.D2 && key != ConsoleKey.Escape)
             {
                 key = Console.ReadKey(true).Key;
             }
@@ -33,8 +35,8 @@ namespace MenuShell.Views
                 return false;
             }
             else
-            {
-                var view = new ManageUsersView();
+            {//måste vara samma dictionary, inte en ny (this.users)
+                var view = new ManageUsersView(users);
                 view.Display();
             }
 

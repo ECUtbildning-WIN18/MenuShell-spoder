@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using MenuShell.Domain;
 
 namespace MenuShell.Views
@@ -11,10 +12,12 @@ namespace MenuShell.Views
         {
                 
         }
+
+        private bool IsRunning = true;
         //här är user vad den ska returnera
         public User Display()
         {
-            do
+            while (IsRunning)
             {
                 Console.Clear();
 
@@ -26,11 +29,12 @@ namespace MenuShell.Views
 
                 Console.Write("Role: ");
                 var roleInput = Console.ReadLine();
+                roleInput = roleInput.ToLower();
 
                 Console.WriteLine("Is this correct? (Y)es, (N)o");
                 ConsoleKey key = ConsoleKey.NoName;
 
-                while (key != ConsoleKey.Y && key != ConsoleKey.N)
+                while (key != ConsoleKey.Y && key != ConsoleKey.N && key != ConsoleKey.Escape)
                 {
                     key = Console.ReadKey(true).Key;
                 }
@@ -40,15 +44,32 @@ namespace MenuShell.Views
                     var role = Role.Undefined;
                     switch (roleInput)
                     {
-                        case "Administrator":
+                        case "administrator":
                             role = Role.Administrator;
                             break;
-                        //ska lägga till de andra rollerna till switchen
+                        case "receptionist":
+                            role = Role.Receptionist;
+                            break;
+                        case "veterinarian":
+                            role = Role.Veterinarian;
+                            break;
                     }
+
+                    if (key == ConsoleKey.Escape)
+                    {
+                        IsRunning = false;
+                    }
+
+                    Console.Clear();
                     var user = new User(username, password, role);
+                    Console.WriteLine("User added!");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    IsRunning = false;
                     return user;
                 }
-            } while (true);
-        }
+            }
+            return null;
+        } 
     }
 }

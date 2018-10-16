@@ -16,26 +16,32 @@ namespace MenuShell
             };
 
             var authenticate = new AuthenticationService(users);
-
             var loginView = new LoginView(authenticate);
 
-            var validUser = loginView.Display();
-
-            switch (validUser.Role)
+            bool isRunning = true;
+            while (isRunning)
             {
-                case Role.Administrator:
+                var validUser = loginView.Display();
+
+
+                switch (validUser.Role)
                 {
-                    var View = new AdministratorMainView();
-                    View.Display();
-                    break;
-                }
-                case Role.Receptionist:
-                {
-                    break;
-                }
-                case Role.Veterinarian:
-                {
-                    break;
+                    case Role.Administrator:
+                    {
+                        var View = new AdministratorMainView(users);
+                        View.Display();
+                        break;
+                    }
+                    case Role.Receptionist:
+                    {
+                        break;
+                    }
+                    case Role.Veterinarian:
+                    {
+                        var VetView = new VeterinarianMainView();
+                        VetView.Display();
+                        break;
+                    }
                 }
             }
         }

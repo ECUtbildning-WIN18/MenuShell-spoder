@@ -14,33 +14,44 @@ namespace MenuShell.Views
             this.users = users;
         }
 
+        private bool IsRunning = true;
+
         public void Display()
         {
-            Console.WriteLine("1. Add user");
-            Console.WriteLine("2. Delete user \n");
-            Console.Write("> ");
-
-            var key = ConsoleKey.NoName;
-
-            while (key != ConsoleKey.D1 && key != ConsoleKey.D2)
+            while (IsRunning)
             {
-                key = Console.ReadKey(true).Key;
-            }
+            
+                Console.WriteLine("1. Add user");
+                Console.WriteLine("2. Delete user");
+                Console.WriteLine("Esc. Go back\n");
+                Console.Write("> ");
 
-            if (key == ConsoleKey.D1)
-            {
-                //AddUserView
-                var view = new AddUsersView();
-                var user = view.Display();  
-                users.Add(user.UserName, user);
-            }
-            else
-            {
-                //DeleteUserView
-                Console.WriteLine("Im going to add Delete user view here");
-                Console.ReadKey();
-            }
+                var key = ConsoleKey.NoName;
 
+                while (key != ConsoleKey.D1 && key != ConsoleKey.D2 && key != ConsoleKey.Escape)
+                {
+                    key = Console.ReadKey(true).Key;
+                }
+
+                if (key == ConsoleKey.D1)
+                {
+                    //AddUserView
+                    var view = new AddUsersView();
+                    var user = view.Display();
+                    users.Add(user.UserName, user);
+                }
+                else if(key == ConsoleKey.D2)
+                {
+                    //DeleteUserView
+                    var view = new DeleteUsersView(users);
+                    view.Display();
+                }
+
+                if (key == ConsoleKey.Escape)
+                {
+                    IsRunning = false;
+                }
+            }
         }
     }
 }
