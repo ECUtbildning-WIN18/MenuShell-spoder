@@ -22,7 +22,7 @@ namespace MenuShell.Views
             {
             
                 Console.WriteLine("1. Add user");
-                Console.WriteLine("2. Delete user");
+                Console.WriteLine("2. Search user");
                 Console.WriteLine("Esc. Go back\n");
                 Console.Write("> ");
 
@@ -42,9 +42,10 @@ namespace MenuShell.Views
                 }
                 else if(key == ConsoleKey.D2)
                 {
-                    //DeleteUserView
-                    var view = new DeleteUsersView(users);
-                    view.Display();
+                    //SearchUserView
+                    var view = new SearchUserView(users);
+                    var user = view.Display();
+                    Console.ReadKey();
                 }
 
                 if (key == ConsoleKey.Escape)

@@ -12,7 +12,9 @@ namespace MenuShell
         {
             var users = new Dictionary<string, User>
             {
-                {"admin", new User("admin", "admin", Role.Administrator)}
+                {"admin", new User("admin", "admin", Role.Administrator)},
+                {"john", new User("john", "john", Role.Veterinarian)},
+                {"joe", new User("joe", "joe", Role.Veterinarian)}
             };
 
             var authenticate = new AuthenticationService(users);
