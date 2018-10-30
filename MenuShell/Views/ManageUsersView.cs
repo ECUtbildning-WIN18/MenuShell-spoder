@@ -20,7 +20,8 @@ namespace MenuShell.Views
         {
             while (IsRunning)
             {
-            
+                Console.Clear();
+
                 Console.WriteLine("1. Add user");
                 Console.WriteLine("2. Search user");
                 Console.WriteLine("Esc. Go back\n");
@@ -43,9 +44,17 @@ namespace MenuShell.Views
                 else if(key == ConsoleKey.D2)
                 {
                     //SearchUserView
-                    var view = new SearchUserView(users);
-                    var user = view.Display();
-                    Console.ReadKey();
+                    var searchusers = new SearchUserView(users);
+                    var userSearchResult = searchusers.Display();
+
+                    if(userSearchResult == null)
+                    {
+                        searchusers.Display();
+                    }
+
+                    //calls list users view
+                    var listUsers = new ListUsersView(userSearchResult, users);
+                    var searchresults = listUsers.Display();
                 }
 
                 if (key == ConsoleKey.Escape)

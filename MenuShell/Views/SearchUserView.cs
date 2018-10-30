@@ -1,6 +1,7 @@
 ﻿using MenuShell.Domain;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace MenuShell.Views
 {
@@ -8,12 +9,14 @@ namespace MenuShell.Views
     { 
         private Dictionary<string, User> users;
 
+        private bool IsRunning = true;
+
         public SearchUserView(Dictionary<string, User> users) : base("Search user view")
         {
             this.users = users;
         }
 
-        public List<string> Display()//returnera list ist för user eftersom det blir mer än en
+        public List<User> Display()//returnera list med users ist för user eftersom det blir mer än en
         {
             Console.Clear();
 
@@ -22,22 +25,32 @@ namespace MenuShell.Views
             var input = Console.ReadLine();
 
             Console.Clear();
-            
 
-            List<string> searchResult = new List<string>();
+
+            List<User> searchResult = new List<User>();
 
             foreach (var entry in users)
             {
                 if (entry.Key.Contains(input))
                 {
-                    searchResult.Add(entry.Key);
+                    searchResult.Add(entry.Value);
+                    //nu returnerar den all information om users som matchade resultatet. Kan ändra i list user sen till bara anv-namn.
+                    IsRunning = false;
                 }
             }
 
-            searchResult.ForEach(Console.WriteLine);
-            Console.WriteLine("\n(D)elete?");
+            if (searchResult.Count == 0)
+            {
+                Console.WriteLine("No users found matching the search term " + input);
+                Thread.Sleep(2000);
+            }
 
             return searchResult;// ska matas in i listUser view
+
+        //searchResult.ForEach(Console.WriteLine);
+
+
+            
         }
     }
 }
