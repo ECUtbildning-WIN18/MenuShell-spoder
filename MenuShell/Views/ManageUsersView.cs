@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using MenuShell.Domain;
 
 namespace MenuShell.Views
@@ -9,9 +8,9 @@ namespace MenuShell.Views
     {
         private Dictionary<string, User> users;
 
-        public ManageUsersView(Dictionary<string, User> users) : base("Manage Users")
+        public ManageUsersView() : base("Manage Users")//tog bort dictionaryn users som inparameter (Dictionary<string, User> users)
         {
-            this.users = users;
+            //this.users = users;
         }
 
         private bool IsRunning = true;
@@ -22,8 +21,8 @@ namespace MenuShell.Views
             {
                 Console.Clear();
 
-                Console.WriteLine("1. Add user");
-                Console.WriteLine("2. Search user");
+                Console.WriteLine("1. Add user");// måste kunna lägga till via databasen
+                Console.WriteLine("2. Search user");//Måste söka i databasen
                 Console.WriteLine("Esc. Go back\n");
                 Console.Write("> ");
 
@@ -39,12 +38,11 @@ namespace MenuShell.Views
                     //AddUserView
                     var view = new AddUsersView();
                     var user = view.Display();
-                    users.Add(user.UserName, user);
                 }
                 else if(key == ConsoleKey.D2)
                 {
                     //SearchUserView
-                    var searchusers = new SearchUserView(users);
+                    var searchusers = new SearchUserView();
                     var userSearchResult = searchusers.Display();
 
                     if(userSearchResult == null)

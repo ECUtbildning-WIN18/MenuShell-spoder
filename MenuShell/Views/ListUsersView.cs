@@ -1,7 +1,6 @@
 ﻿using MenuShell.Domain;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MenuShell.Views
 {
@@ -44,7 +43,7 @@ namespace MenuShell.Views
 
                 if (key == ConsoleKey.D)
                 {
-                    var deleteUserView = new DeleteUsersView(SearchResult, Users);
+                    var deleteUserView = new DeleteUsersView(SearchResult);
                     deleteUserView.Display();
                 }
                 

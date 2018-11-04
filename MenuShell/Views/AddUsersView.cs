@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using MenuShell.Domain;
 
 namespace MenuShell.Views
 {
-    class AddUsersView : BaseView
+    class AddUsersView : BaseView  //Måste kopplas till databasen
     {
         public AddUsersView() : base("Add user view")
         {
@@ -45,7 +43,7 @@ namespace MenuShell.Views
                     switch (roleInput)
                     {
                         case "administrator":
-                            role = Role.Administrator;
+                            role = Role.Admin;
                             break;
                         case "receptionist":
                             role = Role.Receptionist;
@@ -62,6 +60,11 @@ namespace MenuShell.Views
 
                     Console.Clear();
                     var user = new User(username, password, role);
+                    //var userInput = new SqlAddUser(user);
+                    SqlAddUser.AddUser(user);
+                    //userInput.AddUser();
+
+
                     Console.WriteLine("User added!");
                     Thread.Sleep(2000);
                     Console.Clear();

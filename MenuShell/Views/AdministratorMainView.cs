@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using MenuShell.Domain;
 
 namespace MenuShell.Views
 {
     class AdministratorMainView : BaseView
     {
-        private Dictionary<string, User> users;
+        private List< User> users;
 
-        public AdministratorMainView(Dictionary<string, User> users) : base("Administrator Main View")
+        public AdministratorMainView() : base("Administrator Main View")//tog bort dictionaryn users som inparameter (Dictionary<string, User> users)
         {
-            this.users = users;
+            //this.users = users;
         }
 
         public bool Display()
@@ -36,7 +32,7 @@ namespace MenuShell.Views
             }
             else
             {//måste vara samma dictionary, inte en ny (this.users)
-                var view = new ManageUsersView(users);
+                var view = new ManageUsersView();// tog bort dictionaryn users som inparameter
                 view.Display();
             }
 

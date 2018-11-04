@@ -1,27 +1,30 @@
 ﻿using MenuShell.Domain;
+using MenuShell.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 
 namespace MenuShell.Views
 {
     class DeleteUsersView : BaseView
     {
+        
         public List<User> searchResult;
-        private Dictionary<string, User> users;
+        //private Dictionary<string, User> Users;
 
-        public DeleteUsersView(List<User> searchResult, Dictionary<string, User> users) : base ("Delete users view")
+        public DeleteUsersView(List<User> searchResult) : base ("Delete users view") //tog bort "Dictionary<string, User> users" ur konstruktorn
         {
             this.searchResult = searchResult;
-            this.users = users;
+            //Users = users;
         }
 
         public void Display()
         {
+            var users = new AuthenticationService().LoadUsers();
+
             bool isRunning = true;
+
             while (isRunning)
             {
                 foreach (var result in searchResult)
@@ -36,9 +39,10 @@ namespace MenuShell.Views
                 var deleteUsername = Console.ReadLine();
 
 
-                if (users.ContainsKey(deleteUsername))
+                if (users.Where(x => x.UserName.Contains(deleteUsername)).Count() > 0)//HÄR ÄR JAG 
                 {
-                    users.Remove(deleteUsername);
+                    SqlDeleteUser.DeleteUser(deleteUsername);
+                    //Users.Remove(deleteUsername);
                     Console.Clear();
                     Console.WriteLine($"Successfully deleted {deleteUsername}");
                     Thread.Sleep(2000);

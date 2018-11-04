@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MenuShell.Domain;
 using MenuShell.Services;
 using MenuShell.Views;
+using System.Data;
+using System.Data.SqlClient;
+using System;
 
 namespace MenuShell
 {
@@ -10,14 +12,7 @@ namespace MenuShell
     {
         static void Main(string[] args)
         {
-            var users = new Dictionary<string, User>
-            {
-                {"admin", new User("admin", "admin", Role.Administrator)},
-                {"john", new User("john", "john", Role.Veterinarian)},
-                {"joe", new User("joe", "joe", Role.Veterinarian)}
-            };
-
-            var authenticate = new AuthenticationService(users);
+            var authenticate = new AuthenticationService();//tog bort users som inparameter
             var loginView = new LoginView(authenticate);
 
             bool isRunning = true;
@@ -25,27 +20,49 @@ namespace MenuShell
             {
                 var validUser = loginView.Display();
 
-
-                switch (validUser.Role)
+                if(validUser != null)
                 {
-                    case Role.Administrator:
+                    switch (validUser.Role)
                     {
-                        var View = new AdministratorMainView(users);
-                        View.Display();
-                        break;
-                    }
-                    case Role.Receptionist:
-                    {
-                        break;
-                    }
-                    case Role.Veterinarian:
-                    {
-                        var VetView = new VeterinarianMainView();
-                        VetView.Display();
-                        break;
+                        case Role.Admin:
+                            {
+                                var View = new AdministratorMainView();//tog bort users som inparameter
+                                View.Display();
+                                break;
+                            }
+                        case Role.Receptionist:
+                            {
+                                break;
+                            }
+                        case Role.Veterinarian:
+                            {
+                                var VetView = new VeterinarianMainView();
+                                VetView.Display();
+                                break;
+                            }
                     }
                 }
             }
+
+            //string connectionString = "Data Source=(local);Initial Catalog=MenuShell;Integrated Security=true";
+
+            //string queryString = "SELECT * FROM Users";
+
+            //using (var connection = new SqlConnection(connectionString))
+            //{
+            //    var sqlCommand = new SqlCommand(queryString, connection);
+                
+            //    connection.Open();
+
+            //    var reader = sqlCommand.ExecuteReader();
+
+            //    while (reader.Read())
+            //    {
+            //        Console.WriteLine($"{reader[0]}");
+            //    }
+            //    reader.Close();
+            //}
+
         }
     }
 }
